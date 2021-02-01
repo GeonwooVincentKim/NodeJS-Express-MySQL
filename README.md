@@ -18,3 +18,9 @@ USE UserDB;`
 
 - Create `Table`
 - [`See more contents (User Table)`](https://gist.github.com/GeonwooVincentKim)
+
+### Execute Codes
+
+- `git clone https://github.com/GeonwooVincentKim/NodeJS-Express-MySQL` (But sometime could be unnecessary to use this if you have your own project on your Computer already)
+- `npm install express mysql body-parser --save`
+- `node server.js`
