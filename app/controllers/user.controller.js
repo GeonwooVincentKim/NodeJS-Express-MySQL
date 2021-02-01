@@ -1,27 +1,29 @@
 // require("../routes/customer.routes")(app);
 // app.listen(...);
 
-const User = require("../models/user.model");
+const User = require("../models/user.model.js");
 
 exports.create = (req, res) => {
+    console.log("User: " + User.USER_NAME);
     // Validate request
     if (!req.body) {
         res.status(400).send({
         message: "Content can not be empty!"
         });
     }
-
+    console.log("req = "+req.body);
     // Create a Customer
-    const User = new User({
+    const user = new User({
         ID: req.body.ID,
         USER_NAME: req.body.USER_NAME,
         EMAIL: req.body.EMAIL,
         IMAGE_URL: req.body.IMAGE_URL,
         ADDRESS: req.body.ADDRESS,
     });
+    console.log("woww: " + user.USER_NAME);
     
     // Save Customer in the database
-    Customer.create(user, (err, data) => {
+    User.create(user, (err, data) => {
         if (err)
         res.status(500).send({
             message:
@@ -87,7 +89,7 @@ exports.update = (req, res) => {
 };
 
 exports.delete = (req, res) => {
-    Customer.remove(req.params.userID, (err, data) => {
+    User.remove(req.params.userID, (err, data) => {
         if (err) {
             if (err.kind === "not_found") {
                 res.status(404).send({

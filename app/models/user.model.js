@@ -1,7 +1,7 @@
 const sql = require("./db");
 
 const User = function(userInfo){
-    // this.ID = userInfo.ID;
+    this.ID = userInfo.ID;
     this.USER_NAME = userInfo.USER_NAME;
     this.EMAIL = userInfo.EMAIL;
     this.IMAGE_URL = userInfo.IMAGE_URL;
@@ -9,22 +9,22 @@ const User = function(userInfo){
 };
 
 User.create = (newUser, result) => {
-    sql.query("INSERT INTO TB_USER SET ?", newUser, (err, res) => {
+    sql.query("INSERT INTO TB_USER VALUES (?, ?, ?, ?, ?)", newUser, (err, res) => {
         if(err){
-            console.log("error: ", err);
+            console.log("INSERT ERROR: ", err);
             result(err, null);
             return;
         }
 
         console.log("Create New User: ", {ID: res.insertID, ...newUser});
         return(null, {id: res.insertID, ...newUser});
-    })
+    });
 };
 
 User.findByID = (userID, result) => {
     sql.query(`SELECT * FROM TB_USER WHERE ID = ${userID}`, (err, res) => {
         if(err){
-            console.log("error: ", err);
+            console.log("Finding ERROR: ", err);
             result(err, null);
             return;
         }
