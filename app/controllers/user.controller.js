@@ -13,11 +13,11 @@ exports.create = (req, res) => {
 
     // Create a Customer
     const User = new User({
-        ID = req.body.ID,
-        USER_NAME = req.body.USER_NAME,
-        EMAIL = req.body.EMAIL,
-        IMAGE_URL = req.body.IMAGE_URL,
-        ADDRESS = req.body.ADDRESS,
+        ID: req.body.ID,
+        USER_NAME: req.body.USER_NAME,
+        EMAIL: req.body.EMAIL,
+        IMAGE_URL: req.body.IMAGE_URL,
+        ADDRESS: req.body.ADDRESS,
     });
     
     // Save Customer in the database
@@ -32,6 +32,7 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
+    console.log("Before finding all");
     User.getAll((err, data) => {
         if (err)
             res.status(500).send({
