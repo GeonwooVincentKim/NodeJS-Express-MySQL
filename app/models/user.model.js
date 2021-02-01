@@ -9,7 +9,7 @@ const User = function(userInfo){
 };
 
 User.create = (newUser, result) => {
-    sql.query("INSERT INTO TB_USER VALUES (?, ?, ?, ?, ?)", newUser, (err, res) => {
+    sql.query("INSERT INTO `TB_USER` (USER_NAME, EMAIL, IMAGE_URL, ADDRESS) VALUES ('?', '?', '?', '?');", newUser, (err, res) => {
         if(err){
             console.log("INSERT ERROR: ", err);
             result(err, null);
@@ -18,7 +18,7 @@ User.create = (newUser, result) => {
 
         console.log("Create New User: ", {ID: res.insertID, ...newUser});
         return(null, {id: res.insertID, ...newUser});
-    });
+    })
 };
 
 User.findByID = (userID, result) => {
@@ -41,7 +41,7 @@ User.findByID = (userID, result) => {
 }
 
 User.getAll = result => {
-    sql.query("SELECT * FROM TB_USER", (err, res) => {
+    sql.query("SELECT * FROM `TB_USER`;", (err, res) => {
         if(err){
             console.log("error: ", err);
             result(null, err);
@@ -53,59 +53,59 @@ User.getAll = result => {
     });
 };
 
-User.updateByID = (id, user, result) => {
-    sql.query(
-        "UPDATE TB_USER SET EMAIL = ?, USER_NAME = ?, IMAGE_URL = ? ADDRESS = ?, WHERE ID = ?",
-        [user.EMAIL, user.USER_NAME, user.IMAGE_URL, user.ADDRESS, id],
-        (err, res) => {
-            if(err){
-                console.log("error: ", err);
-                result(null, err);
-                return;
-            }
+// User.updateByID = (id, user, result) => {
+//     sql.query(
+//         "UPDATE TB_USER SET EMAIL = ?, USER_NAME = ?, IMAGE_URL = ? ADDRESS = ?, WHERE ID = ?",
+//         [user.EMAIL, user.USER_NAME, user.IMAGE_URL, user.ADDRESS, id],
+//         (err, res) => {
+//             if(err){
+//                 console.log("error: ", err);
+//                 result(null, err);
+//                 return;
+//             }
 
-            if(res.affectedRows == 0){
-                // not found User with the ID
-                result({kind: "not_found"}, null);
-                return;
-            }
+//             if(res.affectedRows == 0){
+//                 // not found User with the ID
+//                 result({kind: "not_found"}, null);
+//                 return;
+//             }
 
-            console.log("Updated User: ", {id: id, ...user});
-            return(null, {id: id, ...user});
-        }
-    )
-}
+//             console.log("Updated User: ", {id: id, ...user});
+//             return(null, {id: id, ...user});
+//         }
+//     )
+// }
 
-User.remove = (id, result) => {
-    sql.query("DELETE FROM TB_USER WHERE id = ?", id, (err, res) => {
-        if(err){
-            console.log("error: ", err);
-            result(null, err);
-            return;
-        }
+// User.remove = (id, result) => {
+//     sql.query("DELETE FROM TB_USER WHERE id = ?", id, (err, res) => {
+//         if(err){
+//             console.log("error: ", err);
+//             result(null, err);
+//             return;
+//         }
 
-        if(res.affectedRows == 0){
-            // not found User with the ID
-            result({kind: "not_found"}, null);
-            return;
-        }
+//         if(res.affectedRows == 0){
+//             // not found User with the ID
+//             result({kind: "not_found"}, null);
+//             return;
+//         }
 
-        console.log("Deleted User with the ID: ", id);
-        return(null, res);
-    });
-};
+//         console.log("Deleted User with the ID: ", id);
+//         return(null, res);
+//     });
+// };
 
-User.removeAll = result => {
-    sql.query("DELETE FROM TB_USER", (err, res) => {
-        if(err){
-            console.log("error: ", err);
-            result(null, err);
-            return;
-        }
+// User.removeAll = result => {
+//     sql.query("DELETE FROM TB_USER", (err, res) => {
+//         if(err){
+//             console.log("error: ", err);
+//             result(null, err);
+//             return;
+//         }
 
-        console.log(`Deleted ${res.affectedRows} Users`);
-        result(null, res);
-    })
-}
+//         console.log(`Deleted ${res.affectedRows} Users`);
+//         result(null, res);
+//     })
+// }
 
 module.exports = User;
