@@ -75,3 +75,37 @@ User.updateByID = (id, user, result) => {
         }
     )
 }
+
+User.remove = (id, result) => {
+    sql.query("DELETE FROM TB_USER WHERE id = ?", id, (err, res) => {
+        if(err){
+            console.log("error: ", err);
+            result(null, err);
+            return;
+        }
+
+        if(res.affectedRows == 0){
+            // not found User with the ID
+            result({kind: "not_found"}, null);
+            return;
+        }
+
+        console.log("Deleted User with the ID: ", id);
+        return(null, res);
+    });
+};
+
+User.removeAll = result => {
+    sql.query("DELETE FROM TB_USER", (err, res) => {
+        if(err){
+            console.log("error: ", err);
+            result(null, err);
+            return;
+        }
+
+        console.log(`Deleted ${res.affectedRows} Users`);
+        result(null, res);
+    })
+}
+
+module.exports = User;
