@@ -9,7 +9,9 @@ const User = function(userInfo){
 };
 
 User.create = (newUser, result) => {
-    sql.query("INSERT INTO `TB_USER` (USER_NAME, EMAIL, IMAGE_URL, ADDRESS) VALUES ('?', '?', '?', '?');", newUser, (err, res) => {
+    let user_values = newUser.body;
+    
+    sql.query("INSERT INTO TB_USER SET USER_NAME = ?, SET EMAIL = ?, SET IMAGE_URL = ?, SET ADDRESS = ?;", [user_values.USER_NAME, user_values.EMAIL, user_values.IMAGE_URL, user_values.ADDRESS], (err, res) => {
         if(err){
             console.log("INSERT ERROR: ", err);
             result(err, null);

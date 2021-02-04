@@ -35,6 +35,7 @@ exports.create = (req, res) => {
 
 exports.findAll = (req, res) => {
     console.log("Before finding all");
+    console.log(User.getAll());
     User.getAll((err, data) => {
         if (err)
             res.status(500).send({
