@@ -13,17 +13,17 @@ exports.create = (req, res) => {
     }
     console.log("req = "+req.body);
     // Create a Customer
-    const user = new User({
-        ID: req.body.ID,
-        USER_NAME: req.body.USER_NAME,
-        EMAIL: req.body.EMAIL,
-        IMAGE_URL: req.body.IMAGE_URL,
-        ADDRESS: req.body.ADDRESS,
+    const user_con = new User({
+        // id: req.body.ID,
+        user_name: req.body.USER_NAME,
+        email: req.body.EMAIL,
+        image_url: req.body.IMAGE_URL,
+        address: req.body.ADDRESS,
     });
-    console.log("woww: " + user.USER_NAME);
+    console.log("woww: " + user_con.USER_NAME);
     
     // Save Customer in the database
-    User.create(user, (err, data) => {
+    User.create(user_con, (err, data) => {
         if (err)
         res.status(500).send({
             message:
@@ -47,7 +47,7 @@ exports.findAll = (req, res) => {
 };
 
 exports.findOne = (req, res) => {
-    User.findById(req.params.ID, (err, data) => {
+    User.findByID(req.params.ID, (err, data) => {
         if (err) {
             if (err.kind === "not_found") {
             res.status(404).send({

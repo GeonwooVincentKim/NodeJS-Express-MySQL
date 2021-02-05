@@ -1,11 +1,11 @@
 const sql = require("./db");
 
-const User = function(userInfo){
-    this.ID = userInfo.ID;
-    this.USER_NAME = userInfo.USER_NAME;
-    this.EMAIL = userInfo.EMAIL;
-    this.IMAGE_URL = userInfo.IMAGE_URL;
-    this.ADDRESS = userInfo.ADDRESS;
+const User = function(users){
+    this.id = users.ID;
+    this.user_name = users.USER_NAME;
+    this.email = users.EMAIL;
+    this.image_url = users.IMAGE_URL;
+    this.address = users.ADDRESS;
 };
 
 User.create = (newUser, result) => {
@@ -18,8 +18,8 @@ User.create = (newUser, result) => {
             return;
         }
 
-        console.log("Create New User: ", {ID: res.insertID, ...newUser});
-        return(null, {id: res.insertID, ...newUser});
+        console.log("Create New User: ", {ID: res.body.ID, ...newUser});
+        return(null, {id: res.body.ID, ...newUser});
     })
 };
 
@@ -43,7 +43,7 @@ User.findByID = (userID, result) => {
 }
 
 User.getAll = result => {
-    sql.query("SELECT * FROM `TB_USER`;", (err, res) => {
+    sql.query("SELECT * FROM TB_USER;", (err, res) => {
         if(err){
             console.log("error: ", err);
             result(null, err);

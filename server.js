@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const app = express();
 var router = express.Router();
 const con = require("./app/models/db");
-const userRouter = require("./app/routes/customer.routes");
+const userRouter = require("./app/routes/users.routes");
 
 // parse requests of content-type: application/json
 app.use(bodyParser.json());
@@ -18,11 +18,11 @@ app.get("/", (req, res) => {
 });
 // const routeFunction = require("./app/routes/customer.routes.js")(app);
 // routeFunction(app);
-app.use("/users", userRouter);
-// require("./app/routes/customer.routes.js")(router);
-
+// app.use("/users", userRouter);
+require("./app/routes/users.routes.js")(app);
+const PORT = process.env.PORT || 3005;
 // set port, listen for requests
-app.listen(3005, () => {
+app.listen(PORT, () => {
     console.log("Server is running on port 3005.");
 });
 
